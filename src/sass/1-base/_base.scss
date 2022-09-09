@@ -1,0 +1,38 @@
+body {
+    background-color: rgb(20, 20, 20);
+    color: white;
+    font-family: $ff;
+    font-size: 120%;
+}
+
+h1 { 
+    font-size: 3rem;
+}
+
+.container {
+    max-width: 50em;
+    height: 100%;
+    margin: 0 auto;
+}
+
+.topbar {
+    text-align: center;
+}
+
+.question {
+    text-align: center;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    gap: 1em;
+}
+
+#app {
+    border-left: 1px solid white;
+    border-right: 1px solid white;
+
+    padding: 1rem;
+}
