@@ -1,13 +1,38 @@
 body {
-    background-color: rgb(20, 20, 20);
-    color: white;
+    background-color: $bg-color;
+    color: $font-color;
     font-family: $ff;
-    font-size: 120%;
+    line-height: 1.12
 }
 
-h1 { 
-    font-size: 3rem;
+.h1 {
+    font-size: 2rem;
+    font-weight: 500;
 }
+
+.h2 {
+    font-size: 2rem;
+}
+
+.h3 {
+    font-size: 1.75rem;
+}
+
+.body {
+    font-size: 1.25rem;
+}
+
+.body-2 {
+    font-size: 0.75rem;
+}
+
+strong {
+    color: $primary-color;
+}
+
+ a{
+     text-decoration: none;
+ }
 
 .container {
     max-width: 50em;
@@ -15,8 +40,16 @@ h1 {
     margin: 0 auto;
 }
 
+.main {
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
 .topbar {
     text-align: center;
+    min-height: 4.5rem;
+    border-bottom: 1px solid $primary-color;
+    margin-bottom: 4rem;
 }
 
 .question {
