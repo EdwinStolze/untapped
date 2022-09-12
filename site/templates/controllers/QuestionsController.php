@@ -12,8 +12,7 @@ class QuestionsController extends \Wireframe\Controller {
      */
     public function render() {
         if ($this->input->urlSegment1() == 'api') {
-            $this->view->setView('json');
-            $this->view->json = $this->getJson();
+            $this->view->setLayout('json');
         }
     }
 
@@ -23,6 +22,7 @@ class QuestionsController extends \Wireframe\Controller {
         foreach($this->page->scoring as $score) {
             array_push($scoringOptions, array(
                 'score_value' => $score->score_value,
+                'score_label' => $score->score_label,
                 'score_description' => $score->score_description
             ));
         }
@@ -31,17 +31,18 @@ class QuestionsController extends \Wireframe\Controller {
         foreach($this->page->children() as $question) {
             array_push($questions, array(
                 'title' => $question->title,
-                'question' => $question->question,
+                'question'   => $question->question,
                 'explanation' => $question->explanation,
-                'scoringOptions' => $scoringOptions
+                'scoringOptions' => $scoringOptions,
+                'userScore' => 0
             ));
         }
 
-        $arr = array(
+        $data = array(
             'companyName' => "Mac Donalds",
             'defaultScoringOptions' => $scoringOptions,
             'questions' => $questions,
         );
-        return json_encode($arr, true);
+        return json_encode($data, true);
     }
 }
