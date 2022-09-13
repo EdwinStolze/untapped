@@ -2,3 +2,46 @@
     display: grid;
     grid-template-columns: 1fr;
 }
+
+.options-wrapper {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    width: 100%;
+    justify-content: space-between;
+    // background-color: black;
+    border-top: 1px solid currentColor;
+    color: $primary-color;
+    min-height: 4rem;
+    .option {
+        flex: 0 0 20%;
+        position: relative;
+        font-size: 0.9rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        &:hover {
+            // background-color: $primary-color;
+            // color: $font-color;
+            font-weight: 700;
+        }
+    }
+    .indicator {
+        transition: all .2s ease-in-out;
+        position: absolute;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: .7rem;
+        color: $font-color;
+        width: 2rem;
+        height: 2rem;
+        background-color: $primary-color;
+        top: -1rem;
+        border-radius: 50%;
+        left: 0%;
+        transform: translateX(-50%);
+    }
+}
