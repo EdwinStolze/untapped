@@ -1,5 +1,3 @@
-
-
 export default {
     template: `
         <div class="question text-align-center h1">
@@ -9,7 +7,7 @@ export default {
             <input type="number" v-model="question.userScore">
         </div>
     `,
-    
+
     props: {
         question: Object,
     },
@@ -18,6 +16,6 @@ export default {
         return {
             answer: 0
         }
-    }
+    },
 }
 

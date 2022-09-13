@@ -16,7 +16,7 @@
 
 <?= file_get_contents(__DIR__ . '../../resources/arrow.svg') ?>
 
-<a href="" class="button-circle">
+<a href="#" class="button-circle">
 <?= file_get_contents(__DIR__ . '../../resources/arrow.svg') ?>
 </a>
 
