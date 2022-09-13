@@ -2,7 +2,8 @@ body {
     background-color: $bg-color;
     color: $font-color;
     font-family: $ff;
-    line-height: 1.12
+    line-height: 1.12;
+    font-size: 1.25rem;
 }
 
 .h1 {
@@ -63,9 +64,11 @@ strong {
     gap: 1em;
 }
 
-#app {
-    border-left: 1px solid white;
-    border-right: 1px solid white;
+.question  {
+    padding: 2rem;
+    text-align: center;
+}
 
-    padding: 1rem;
+.text-align-center {
+    text-align: center;
 }

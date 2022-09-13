@@ -30,6 +30,7 @@ class QuestionsController extends \Wireframe\Controller {
         $questions = [];
         foreach($this->page->children() as $question) {
             array_push($questions, array(
+                'id' => $question->id,
                 'title' => $question->title,
                 'question'   => $question->question,
                 'explanation' => $question->explanation,

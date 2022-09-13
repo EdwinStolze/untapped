@@ -1,18 +1,22 @@
-import AppButton from '/src/js/components/AppButton.js';
+import Questionaire from "/src/js/components/Questionaire.js";
 
 export default {
+
+    template: `
+    	<questionaire :repo="repo"></questionaire>
+    `,
+
     components: {
-        AppButton
+        Questionaire,
     },
+
     data() {
         return {
-            answer: 0,
-            questions: [
-                { question: "Question 1", complete: false, id:1},
-                { question: "Question 2", complete: false, id:2 },
-                { question: "Question 3", complete: false, id:3 },
-                { question: "Question 4", complete: false, id:4 },
-            ]
-        }
-    }
-}
+			repo: {
+				companyName: 'My Company',
+				email: '',
+				questions: []
+			}
+        };
+    },
+};

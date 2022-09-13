@@ -15,9 +15,7 @@
             <div class="topbar">
                 <h1>untapped</h1>
             </div>
-            <div class="grid ">
-                <?= $placeholders->default ?>
-            </div>
+            <?= $placeholders->default ?>
         </main>
     </body>
 </html>
