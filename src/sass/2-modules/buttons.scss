@@ -38,7 +38,7 @@
             fill: currentColor;
         }
     }
-    &:hover {
+    &:hover, &.active {
         background-color: $primary-color;
         border-color: $primary-color;
         color: currentColor;

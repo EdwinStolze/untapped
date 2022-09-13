@@ -54,7 +54,7 @@ function scripts() {
 
 function watch() {
     gulp.watch('./src/sass/**/*', styles);
-    gulp.watch('./src/js/**/*', scripts);
+    // gulp.watch('./src/js/**/*', scripts);
 }
 
 exports.styles = styles;

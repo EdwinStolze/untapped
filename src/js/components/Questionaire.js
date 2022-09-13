@@ -1,5 +1,6 @@
 import AppQuestion from "/src/js/components/Question.js";
 import CircleButton from "/src/js/components/CircleButton.js";
+import QuestionaireProgress from "/src/js/components/Progress.js";
 
 export default {
 
@@ -8,13 +9,10 @@ export default {
             <div class="text-align-center body">
                 Is life more fun when working {{ repo.companyName }}? Lets find out.
             </div>
-            <div class="progress">
-                <ul>
-                    <li v-for="question in repo.questions" :key="question.id" class="button-circle" @click="navigateTo(question)">
-                        {{ question.id }}
-                    </li>
-                </ul>
-            </div>
+            <questionaire-progress 
+                :questions="repo.questions"
+                @navigateTo="navigateTo"
+            ></questionaire-progress>
             <app-question :question="currentQuestion"></app-question>
             <nav v-if="showNextButton">
                 <circle-button @click="next"></circle-button>
@@ -24,7 +22,8 @@ export default {
 
     components: {
         AppQuestion,
-        CircleButton
+        CircleButton,
+        QuestionaireProgress
     },
 
     props: {
@@ -50,19 +49,20 @@ export default {
     },
 
     methods: {
+
+        // Move to the next question
         next () {
             this.questionIndex++;
         },
-        // navigateTo(questionNumber) {
-        //     if (questionNumber < 1) return;
-        //     if (questionNumber > this.repo.questions.length) return;
-        //     this.questionIndex = questionNumber -1;
-        // },
+
+        // Helper function to get the index of a question
         getIndexOf(question) {
             return this.repo.questions.findIndex( q => {
                 return q.id == question.id;
             });
         },
+
+        // Navigate to question
         navigateTo(question) {
             this.questionIndex = this.getIndexOf(question);
         }
