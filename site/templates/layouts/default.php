@@ -11,11 +11,18 @@
         <script src="https://unpkg.com/vue@3"></script>
     </head>
     <body>
-        <main class="main container">
+        <div class="main-container">
             <div class="topbar">
                 <h1>untapped</h1>
             </div>
-            <?= $placeholders->default ?>
-        </main>
+            <main class="main">
+                <?= $placeholders->default ?>
+            </main>
+            <?php if ($placeholders->footer) : ?>
+            <footer class="footer">
+                <?= $placeholders->footer ?>
+            </footer>
+            <?php endif ; ?>
+        </div>
     </body>
 </html>

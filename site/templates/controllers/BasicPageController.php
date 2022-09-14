@@ -12,7 +12,6 @@ class HomeController extends \Wireframe\Controller {
      */
     public function render() {
         $this->view->some_var = "some value";
-        $this->view->nextPage = $this->pages->get("template=intro");
-        // $this->view->placeholders->footer = "<p>&copy; untapped</p>";
     }
+ 
 }
