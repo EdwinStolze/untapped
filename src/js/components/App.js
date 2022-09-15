@@ -3,7 +3,7 @@ import Questionaire from "/src/js/components/Questionaire.js";
 export default {
 
     template: `
-    	<questionaire :repo="repo"></questionaire>
+    	<questionaire :questionaire="questionaire"></questionaire>
     `,
 
     components: {
@@ -12,7 +12,7 @@ export default {
 
     data() {
         return {
-			repo: {
+			questionaire: {
 				companyName: 'My Company',
 				email: '',
 				questions: []

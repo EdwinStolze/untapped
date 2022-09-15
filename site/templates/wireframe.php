@@ -19,6 +19,6 @@ $wireframe->init();
 // render the page
 echo $wireframe->render([
     'site_name' => 'untapped',
-    // 'lang' => 'en',
+    'lang' => 'en',
     // 'home' => $pages->get(1),
 ]);

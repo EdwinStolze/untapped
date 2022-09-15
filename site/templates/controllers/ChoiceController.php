@@ -11,7 +11,7 @@ class ChoiceController extends \Wireframe\Controller {
      * Render method gets executed automatically when page is rendered.
      */
     public function render() {
-        $this->view->nextPage = $this->page->children("template=questions");
+        // $this->view->nextPage = $this->page->children("template=questions");
     }
  
 }

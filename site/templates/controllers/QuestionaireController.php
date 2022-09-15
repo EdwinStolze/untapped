@@ -5,7 +5,7 @@ namespace Wireframe\Controller;
 /**
  * This is the Controller class for the home template.
  */
-class QuestionsController extends \Wireframe\Controller {
+class QuestionaireController extends \Wireframe\Controller {
   
     /**
      * Render method gets executed automatically when page is rendered.
