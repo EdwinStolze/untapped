@@ -7,16 +7,14 @@ namespace Wireframe\Controller;
  */
 class QuestionaireController extends \Wireframe\Controller {
   
-    /**
-     * Render method gets executed automatically when page is rendered.
-     */
+    
     public function render() {
-        if ($this->input->urlSegment1() == 'api') {
-            $this->view->setLayout('json');
-        }
+        echo $this->wire('modules')->get('WireframeAPI')->init()->sendHeaders()->render();
+        $this->view->setLayout(null)->halt();
     }
 
-    public function getJson() {
+
+    public function renderJSON(): ?string {
 
         $scoringOptions = [];
         foreach($this->page->scoring as $score) {
@@ -39,11 +37,19 @@ class QuestionaireController extends \Wireframe\Controller {
             ));
         }
 
+        $sortables = [];
+        foreach($this->page->sortables as $sortable ) {
+            array_push($sortables, $sortable->sort_item);
+        }
+
         $data = array(
-            'companyName' => "Mac Donalds",
-            'defaultScoringOptions' => $scoringOptions,
+            'companyName' => "My Company name",
+            // 'defaultScoringOptions' => $scoringOptions,
             'questions' => $questions,
+            'sortables' => $sortables
         );
+
         return json_encode($data, true);
     }
+
 }
