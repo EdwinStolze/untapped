@@ -5,13 +5,27 @@ namespace Wireframe\Controller;
 /**
  * This is the Controller class for the home template.
  */
-class HomeController extends \Wireframe\Controller {
+
+
+ 
+class BasicPageController extends \Wireframe\Controller {
   
     /**
-     * Render method gets executed automatically when page is rendered.
+     * Render method
      */
     public function render() {
-        $this->view->some_var = "some value";
+        $api = $this->wire('modules')->get('WireframeAPI')->init(); 
+        echo $api->sendHeaders()->render();
+        $this->view->setLayout(null)->halt();
+    }
+    
+    public function renderJSON(): ?string {
+        return json_encode([
+            "title" => $this->page->title,
+            "body" => $this->page->body,
+            "firstChild" => $this->page->children->first->id,
+            "nextPage" => $this->page->next()->id
+        ]);
     }
  
 }

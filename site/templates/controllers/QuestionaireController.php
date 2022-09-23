@@ -7,12 +7,11 @@ namespace Wireframe\Controller;
  */
 class QuestionaireController extends \Wireframe\Controller {
   
-    
     public function render() {
         echo $this->wire('modules')->get('WireframeAPI')->init()->sendHeaders()->render();
         $this->view->setLayout(null)->halt();
+        // var_dump($this->renderJSON());
     }
-
 
     public function renderJSON(): ?string {
 
@@ -38,12 +37,12 @@ class QuestionaireController extends \Wireframe\Controller {
         }
 
         $sortables = [];
-        foreach($this->page->sortables as $sortable ) {
+        foreach($this->page->sortables as $sortable) {
             array_push($sortables, $sortable->sort_item);
         }
 
         $data = array(
-            'companyName' => "My Company name",
+            'companyName' => "Your company name",
             // 'defaultScoringOptions' => $scoringOptions,
             'questions' => $questions,
             'sortables' => $sortables
