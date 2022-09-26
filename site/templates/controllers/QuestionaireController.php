@@ -10,7 +10,7 @@ class QuestionaireController extends \Wireframe\Controller {
     public function render() {
         echo $this->wire('modules')->get('WireframeAPI')->init()->sendHeaders()->render();
         $this->view->setLayout(null)->halt();
-        // var_dump($this->renderJSON());
+        var_dump($this->renderJSON());
     }
 
     public function renderJSON(): ?string {

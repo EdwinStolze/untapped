@@ -1,0 +1,1 @@
+<h1>basic page</h1>
