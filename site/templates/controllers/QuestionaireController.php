@@ -10,22 +10,25 @@ class QuestionaireController extends \Wireframe\Controller {
     public function render() {
         echo $this->wire('modules')->get('WireframeAPI')->init()->sendHeaders()->render();
         $this->view->setLayout(null)->halt();
-        var_dump($this->renderJSON());
+        // var_dump($this->renderJSON());
     }
 
     public function renderJSON(): ?string {
 
-        $scoringOptions = [];
-        foreach($this->page->scoring as $score) {
-            array_push($scoringOptions, array(
-                'score_value' => $score->score_value,
-                'score_label' => $score->score_label,
-                'score_description' => $score->score_description
-            ));
-        }
-
+        
         $questions = [];
-        foreach($this->page->children() as $question) {
+        foreach($this->page->find("template=question") as $question) {
+            
+            
+            $scoringOptions = [];
+            foreach($question->scoring as $score) {
+                array_push($scoringOptions, array(
+                    'score_value' => $score->score_value,
+                    'score_label' => $score->score_label,
+                    'score_description' => $score->score_description
+                ));
+            }
+
             array_push($questions, array(
                 'id' => $question->id,
                 'title' => $question->title,
@@ -41,11 +44,32 @@ class QuestionaireController extends \Wireframe\Controller {
             array_push($sortables, $sortable->sort_item);
         }
 
+        $categories = [];
+        foreach($this->page->find("template=category") as $category) {
+
+            $scoringOptions = [];
+            foreach($category->scoring as $score) {
+                array_push($scoringOptions, array(
+                    'score_value' => $score->score_value,
+                    'score_label' => $score->score_label,
+                    'score_description' => $score->score_description
+                ));
+            }
+
+            array_push($categories, array(
+                'id' => $category->id,
+                'title' => $category->title,
+                'explanation' => $category->explanation,
+                'scoringOptions' => $scoringOptions,
+            ));
+        }
+
         $data = array(
             'companyName' => "Your company name",
             // 'defaultScoringOptions' => $scoringOptions,
             'questions' => $questions,
-            'sortables' => $sortables
+            'sortables' => $sortables,
+            'categories' => $categories
         );
 
         return json_encode($data, true);
