@@ -66,7 +66,7 @@ class QuestionaireController extends \Wireframe\Controller {
 
         $data = array(
             'companyName' => "Your company name",
-            // 'defaultScoringOptions' => $scoringOptions,
+            'defaultScoringOptions' => $scoringOptions,
             'questions' => $questions,
             'sortables' => $sortables,
             'categories' => $categories
