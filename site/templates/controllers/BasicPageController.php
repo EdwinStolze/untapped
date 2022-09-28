@@ -2,27 +2,24 @@
   
 namespace Wireframe\Controller;
   
-/**
- * This is the Controller class for the home template.
- */
 
-
- 
 class BasicPageController extends \Wireframe\Controller {
-  
-    /**
-     * Render method
-     */
-    public function render() {
-        $api = $this->wire('modules')->get('WireframeAPI')->init(); 
-        echo $api->sendHeaders()->render();
-        $this->view->setLayout(null)->halt();
-    }
     
     public function renderJSON(): ?string {
+
+        $accordion = [];
+        foreach($this->page->accordion as $accItem) {
+            array_push($accordion, array(
+                'id' => $accItem->id,
+                'title' => $accItem->title,
+                'body' => $accItem->body,
+            ));
+        }
+
         return json_encode([
             "title" => $this->page->title,
             "body" => $this->page->body,
+            "accordion" => $accordion,
             "firstChild" => $this->page->children->first->id,
             "nextPage" => $this->page->next()->id
         ]);
