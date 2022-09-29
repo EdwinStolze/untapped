@@ -17,11 +17,13 @@ class BasicPageController extends \Wireframe\Controller {
         }
 
         return json_encode([
-            "title" => $this->page->title,
-            "body" => $this->page->body,
-            "accordion" => $accordion,
-            "firstChild" => $this->page->children->first->id,
-            "nextPage" => $this->page->next()->id
+            'title' => $this->page->title,
+            'body' => $this->page->body,
+            'accordion' => $accordion,
+            'next_page' => $this->page->next()->id,
+            'vue_router_name' => $this->page->vue_router_name,
+            'button_type' => $this->page->button_type,
+            'button_name' => $this->page->button_name
         ]);
     }
  

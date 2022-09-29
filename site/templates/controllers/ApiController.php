@@ -13,15 +13,6 @@ class APIController extends \Wireframe\Controller {
     public function render() {
         // echo $this->wire('modules')->get('WireframeAPI')->init()->sendHeaders()->render();
         $api = $this->wire('modules')->get('WireframeAPI') ;
-
-        $api->addEndpoint('home', function($path, $args) use ($pages) {
-            return [
-                'path' => $path,
-                'args' => $args,
-                'url' => $pages->get(1)->url
-            ];
-        });
-
         echo $api->init()->sendHeaders()->render();
         $this->view->setLayout(null)->halt();
     }
