@@ -17,7 +17,7 @@ class QuestionaireController extends \Wireframe\Controller {
 
         
         $questions = [];
-        foreach($this->page->find("template=question") as $question) {
+        foreach($this->page->find("template=question, sort=sort") as $question) {
             
             
             $scoringOptions = [];
@@ -65,7 +65,9 @@ class QuestionaireController extends \Wireframe\Controller {
         }
 
         $data = array(
-            'companyName' => "Your company name",
+            'companyName' => '',
+            'questionaireID' => $this->page->id,
+            'version' => 1,
             'defaultScoringOptions' => $scoringOptions,
             'questions' => $questions,
             'sortables' => $sortables,
