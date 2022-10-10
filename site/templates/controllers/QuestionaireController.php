@@ -32,6 +32,7 @@ class QuestionaireController extends \Wireframe\Controller {
             array_push($questions, array(
                 'id' => $question->id,
                 'title' => $question->title,
+                'icon' => $question->driver->icon_name,
                 'question'   => $question->question,
                 'explanation' => $question->explanation,
                 'scoringOptions' => $scoringOptions,
@@ -44,12 +45,22 @@ class QuestionaireController extends \Wireframe\Controller {
             array_push($sortables, $sortable->sort_item);
         }
 
+        $defaultScoringOptions = [];
+        foreach($this->page->scoring as $score) {
+            array_push($defaultScoringOptions, array(
+                'score_value' => $score->score_value,
+                'score_label' => $score->score_label,
+                'score_description' => $score->score_description
+            ));
+        }
+
+
         $categories = [];
         foreach($this->page->find("template=category") as $category) {
 
-            $scoringOptions = [];
+            $catScoringOptions = [];
             foreach($category->scoring as $score) {
-                array_push($scoringOptions, array(
+                array_push($catScoringOptions, array(
                     'score_value' => $score->score_value,
                     'score_label' => $score->score_label,
                     'score_description' => $score->score_description
@@ -60,7 +71,7 @@ class QuestionaireController extends \Wireframe\Controller {
                 'id' => $category->id,
                 'title' => $category->title,
                 'explanation' => $category->explanation,
-                'scoringOptions' => $scoringOptions,
+                'scoringOptions' => $catScoringOptions,
             ));
         }
 
@@ -68,8 +79,10 @@ class QuestionaireController extends \Wireframe\Controller {
             'companyName' => '',
             'questionaireID' => $this->page->id,
             'version' => 1,
-            'defaultScoringOptions' => $scoringOptions,
+            'hash' => 123123,
+            'defaultScoringOptions' => $defaultScoringOptions,
             'questions' => $questions,
+            'sortablesText' => $this->page->sortablestext,
             'sortables' => $sortables,
             'categories' => $categories
         );
