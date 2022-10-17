@@ -16,6 +16,7 @@ class APIController extends \Wireframe\Controller {
 
         $this->view->setLayout(null)->halt();
         $api = $this->wire('modules')->get('WireframeAPI') ;
+        // Add custom api's
         $this->textViewAPI($api);
         $this->questionaireAPI($api);
         return $api->init()->sendHeaders()->render();
