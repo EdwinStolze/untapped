@@ -12,16 +12,18 @@ class APIController extends \Wireframe\Controller {
      */
     public function render() {
 
+        $this->page = $this->pages->get("template={$this->input->urlSegment1()}, name=" . $this->input->urlSegment2());
+
         $this->view->setLayout(null)->halt();
         $api = $this->wire('modules')->get('WireframeAPI') ;
-        // $this->textViewAPI($api);
+        $this->textViewAPI($api);
         $this->questionaireAPI($api);
         return $api->init()->sendHeaders()->render();
     }
 
     public function questionaireAPI($api) {
         $api->addEndpoint('questionaire', function($path, $args) {
-            $this->page = $this->pages->get("template=questionaire, name=".$path[0]);
+            // $this->page = $this->pages->get("template=questionaire, name=".$path[0]);
 
             $defaultScoringOptions = [];
             foreach($this->page->scoring as $score) {
@@ -50,7 +52,7 @@ class APIController extends \Wireframe\Controller {
                 array_push($questions, array(
                     'id' => $question->id,
                     'title' => $question->title,
-                    'icon' => null,
+                    'icon' => $question->driver->icon_name,
                     'questions' => $question->question,
                     'explanation' => $question->explanation,
                     'scoringOptions' => $scoringOptions,
@@ -72,6 +74,10 @@ class APIController extends \Wireframe\Controller {
                     "questions" => $questions,
                     "sortableText" => $this->page->sortablestext,
                     "sortables" => $sortables,
+                    "next_page" => $this->page->next_page ? $this->page->next_page->id : false,
+                    "vue_router_name" => $this->page->vue_router_name,
+                    "button_type" => $this->page->button_type,
+                    "button_name" => $this->page->button_name,
                 ]
             ];
         });
@@ -80,7 +86,7 @@ class APIController extends \Wireframe\Controller {
 
     public function textViewAPI($api) {
         $api->addEndpoint('basic-page', function($path, $args) {
-            $this->page = $this->pages->get("template=basic-page,name=".$path[0]);
+            // $this->page = $this->pages->get("template=basic-page,name=".$path[0]);
             $accordion = [];
             foreach($this->page->accordion as $acc) {
                 array_push($accordion,[
