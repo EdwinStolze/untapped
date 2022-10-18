@@ -19,15 +19,16 @@ class BackendController extends \Wireframe\Controller {
     // private function 
     // TODO:: aanpassen json file to encorporate questionaireID.
 
-    public function processResults($results) {
+    public function processResults($resultObject) {
 
-        $questionairePage = $this->pages->get(1047)->parent;
+        $questionairePage = $this->pages->get($resultObject->questionaireID);
         $categoryParentPage = $questionairePage->get("template=categories");
         $categories = $categoryParentPage->children();
 
         $resultsArray = array(
-            'questionaireID' => $questionairePage->id,
-            'version' => 1,  // todo version number verwerking
+            'questionaireID' => $resultObject->questionaireID,
+            'version' => $resultObject->version,
+            'hash' => $resultObject->hash,
             'results' => []
         );
 
@@ -56,7 +57,7 @@ class BackendController extends \Wireframe\Controller {
         }
         
         // Collect data
-        foreach($results as $result) {
+        foreach($resultObject->results as $result) {
 
             $questionPage = $this->pages->get($result->id);
             if (!$questionairePage) continue;

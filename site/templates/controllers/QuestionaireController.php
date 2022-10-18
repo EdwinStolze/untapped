@@ -10,12 +10,10 @@ class QuestionaireController extends \Wireframe\Controller {
     public function render() {
         echo $this->wire('modules')->get('WireframeAPI')->init()->sendHeaders()->render();
         $this->view->setLayout(null)->halt();
-        // var_dump($this->renderJSON());
     }
 
     public function renderJSON(): ?string {
 
-        
         $questions = [];
         foreach($this->page->find("template=question, sort=sort") as $question) {
             
@@ -77,9 +75,10 @@ class QuestionaireController extends \Wireframe\Controller {
 
         $data = array(
             'companyName' => '',
+            'test' => 'This is a test',
             'questionaireID' => $this->page->id,
-            'version' => 1,
-            'hash' => 123123,
+            'version' => $this->page->version,
+            'hash' => $this->page->hash,
             'defaultScoringOptions' => $defaultScoringOptions,
             'questions' => $questions,
             'sortablesText' => $this->page->sortablestext,
