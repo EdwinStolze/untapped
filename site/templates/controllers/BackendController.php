@@ -2,9 +2,6 @@
   
 namespace Wireframe\Controller;
   
-/**
- * This is the Controller class for the home template.
- */
 class BackendController extends \Wireframe\Controller {
   
     /**
@@ -13,26 +10,25 @@ class BackendController extends \Wireframe\Controller {
     public function render() {
 
         $this->view->setLayout('json');
-        // $results = '[{"id":1071,"userScore":3},{"id":1044,"userScore":3},{"id":1072,"userScore":3},{"id":1040,"userScore":3},{"id":1039,"userScore":3},{"id":1045,"userScore":3},{"id":1041,"userScore":3},{"id":1073,"userScore":3},{"id":1074,"userScore":3},{"id":1075,"userScore":3},{"id":1091,"userScore":3},{"id":1092,"userScore":3},{"id":1093,"userScore":3},{"id":1094,"userScore":3},{"id":1099,"userScore":3},{"id":1100,"userScore":3},{"id":1101,"userScore":3},{"id":1102,"userScore":3},{"id":1103,"userScore":3},{"id":1104,"userScore":3},{"id":1105,"userScore":3},{"id":1106,"userScore":5},{"id":1107,"userScore":3},{"id":1108,"userScore":3},{"id":1109,"userScore":3},{"id":1110,"userScore":3},{"id":1111,"userScore":3},{"id":1112,"userScore":3},{"id":1113,"userScore":3},{"id":1114,"userScore":3},{"id":1115,"userScore":3},{"id":1116,"userScore":3},{"id":1117,"userScore":3},{"id":1118,"userScore":3},{"id":1119,"userScore":3},{"id":1120,"userScore":3},{"id":1121,"userScore":3},{"id":1122,"userScore":3},{"id":1123,"userScore":3},{"id":1124,"userScore":3},{"id":1126,"userScore":3},{"id":1125,"userScore":3},{"id":1127,"userScore":3},{"id":1128,"userScore":3},{"id":1129,"userScore":3},{"id":1130,"userScore":3},{"id":1131,"userScore":3},{"id":1132,"userScore":3},{"id":1133,"userScore":3},{"id":1141,"userScore":3},{"id":1135,"userScore":3},{"id":1136,"userScore":3},{"id":1137,"userScore":3},{"id":1138,"userScore":3},{"id":1139,"userScore":3},{"id":1142,"userScore":3},{"id":1143,"userScore":3},{"id":1144,"userScore":3},{"id":1145,"userScore":3},{"id":1146,"userScore":3},{"id":1147,"userScore":3},{"id":1148,"userScore":3}]';
         $results = json_decode(file_get_contents('php://input'), false); //true naar false getr
-        $this->wire('log')->save('untapped', json_encode($results));
-        // $results = json_decode($results);
         $processedResults = $this->processResults($results);
         $processedResults = json_encode($processedResults, true);
         $this->view->json = $processedResults;
     }
 
     // private function 
+    // TODO:: aanpassen json file to encorporate questionaireID.
 
-    public function processResults($results) {
+    public function processResults($resultObject) {
 
-        $questionairePage = $this->pages->get(1047)->parent;
+        $questionairePage = $this->pages->get($resultObject->questionaireID);
         $categoryParentPage = $questionairePage->get("template=categories");
         $categories = $categoryParentPage->children();
 
         $resultsArray = array(
-            'questionaireID' => $questionairePage->id,
-            'version' => 1,  // todo version number verwerking
+            'questionaireID' => $resultObject->questionaireID,
+            'version' => $resultObject->version,
+            'hash' => $resultObject->hash,
             'results' => []
         );
 
@@ -61,7 +57,7 @@ class BackendController extends \Wireframe\Controller {
         }
         
         // Collect data
-        foreach($results as $result) {
+        foreach($resultObject->results as $result) {
 
             $questionPage = $this->pages->get($result->id);
             if (!$questionairePage) continue;
