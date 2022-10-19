@@ -10,7 +10,6 @@ class QuestionaireController extends \Wireframe\Controller {
     public function render() {
         echo $this->wire('modules')->get('WireframeAPI')->init()->sendHeaders()->render();
         $this->view->setLayout(null)->halt();
-        // var_dump($this->renderJSON());
     }
 
     public function renderJSON(): ?string {
@@ -33,6 +32,7 @@ class QuestionaireController extends \Wireframe\Controller {
                 'id' => $question->id,
                 'title' => $question->title,
                 'icon' => $question->driver->icon_name,
+                'icon_title' => $question->driver->title,
                 'question'   => $question->question,
                 'explanation' => $question->explanation,
                 'scoringOptions' => $scoringOptions,
@@ -78,8 +78,9 @@ class QuestionaireController extends \Wireframe\Controller {
         $data = array(
             'companyName' => '',
             'questionaireID' => $this->page->id,
-            'version' => 1,
-            'hash' => 123123,
+            'version' => $this->page->version,
+            'hash' => $this->page->hash,
+            'strapline' => $this->page->strapline,
             'defaultScoringOptions' => $defaultScoringOptions,
             'questions' => $questions,
             'sortablesText' => $this->page->sortablestext,
