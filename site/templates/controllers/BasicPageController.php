@@ -23,10 +23,9 @@ class BasicPageController extends \Wireframe\Controller
             ));
         }
 
-        $big_buttons = [];
-        foreach ($this->page->big_buttons as $button) {
-            array_push($big_buttons, array(
-                'id'                => $button->id,
+        $page_buttons = [];
+        foreach ($this->page->page_buttons as $button) {
+            array_push($page_buttons, array(
                 'title'             => $button->title,
                 'next_page_id'      => $button->next_page->id,
                 'vue_router_name'   => $button->vue_router_name,
@@ -81,7 +80,7 @@ class BasicPageController extends \Wireframe\Controller
             'title' => $this->page->title,
             'body' => $this->page->body,
             'accordion' => $accordion,
-            'big_buttons' => $big_buttons,
+            'page_buttons' => $page_buttons,
             'next_page' => $this->page->next()->id,
             'vue_router_name' => $this->page->vue_router_name,
             'button_type' => $this->page->button_type,
