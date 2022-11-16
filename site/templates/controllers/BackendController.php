@@ -11,9 +11,45 @@ class BackendController extends \Wireframe\Controller {
 
         $this->view->setLayout('json');
         $results = json_decode(file_get_contents('php://input'), false); //true naar // als object
-        $processedResults = $this->processResults($results);
-        $processedResults = json_encode($processedResults, true);
-        $this->view->json = $processedResults;
+        
+        // Process comments
+        if (isset($results->comment)) {
+            // $this->processComments($results);
+            $processComments = $this->processComments($results);
+            $processComments = json_encode($processComments, true);
+            $this->view->json = $processComments;
+        }
+
+
+        // Process questionaire results
+        if (isset($results->questionaireID)) {
+            $processedResults = $this->processResults($results);
+            $processedResults = json_encode($processedResults, true);
+            $this->view->json = $processedResults;
+        }
+    }
+
+    public function processComments($resultObject) {
+        $commentsPage = $this->pages->get('template=comments');
+        $commentsPage->of(false);
+        $comment = $commentsPage->comments->makeBlankItem();
+        $comment->comment = $resultObject->comment;
+        $comment->timestamp = $this->datetime->date();
+        $comment->date = $this->datetime->date();
+        $commentsPage->comments->add($comment);
+        $commentsPage->save('comments');
+
+        // Define json response
+        $comments = [];
+        foreach ($this->pages->get('template=comments')->comments as $comment) {
+            array_push($comments, array(
+                'id' => $comment->data,
+                'date' => $comment->date,
+                'timestamp' => $comment->timestamp,
+                'comment' => $comment->comment,
+            ));
+        }
+        return $comments;
     }
 
     public function processResults($resultObject) {
