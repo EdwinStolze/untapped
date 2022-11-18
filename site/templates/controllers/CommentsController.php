@@ -23,7 +23,7 @@ class CommentsController extends \Wireframe\Controller
                 'comment' => $comment->comment,
             ));
         }
-
+        $comments = array_reverse($comments);
         return json_encode([
             'comments' => $comments,
         ]);
