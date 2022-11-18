@@ -12,7 +12,7 @@ class HomeController extends \Wireframe\Controller {
         return json_encode([
             'title' => $this->page->title,
             // 'body' => $this->page->body,
-            'next_page' => $this->page->next()->id,
+            'next_page' => $this->page->next_page->id,
             'vue_router_name' => $this->page->vue_router_name,
             'button_type' => $this->page->button_type,
             'button_name' => $this->page->button_name
