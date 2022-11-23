@@ -99,7 +99,14 @@ class BackendController extends \Wireframe\Controller {
             $key = array_search($cat->id, array_map(function($v){return $v['id'];},$resultsArray['results']));
             $resultsArray['results'][$key]['amount']++;
             $resultsArray['results'][$key]['scoreSum'] = $resultsArray['results'][$key]['scoreSum'] + $result->userScore ;
-        }
+
+            // Indien resultaten ook in een andere category verwerkt moeten worden.
+            if ($cat->add_results_to) {
+                $key = array_search($cat->add_results_to->id, array_map(function($v){return $v['id'];},$resultsArray['results']));
+                $resultsArray['results'][$key]['amount']++;
+                $resultsArray['results'][$key]['scoreSum'] = $resultsArray['results'][$key]['scoreSum'] + $result->userScore ; 
+            }
+        }   
 
         // Process averages
         foreach($resultsArray['results'] as &$cat) {

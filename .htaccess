@@ -1,3 +1,19 @@
+# Header always set Access-Control-Allow-Origin "*"
+# Header always set Access-Control-Allow-Methods "GET,PUT,POST,DELETE"
+# Header always set Access-Control-Allow-Headers "Content-Type, Authorization"
+# <IfModule mod_headers.c>
+
+#   Header always set Access-Control-Allow-Origin "*"
+#   Header always set Access-Control-Allow-Credentials "true"
+#   Header always set Access-Control-Allow-Methods "GET,HEAD,POST,PUT"
+#   Header always set Access-Control-Allow-Headers "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers"
+
+# </IfModule>
+
+# RewriteEngine On
+# RewriteCond %{REQUEST_METHOD} OPTIONS
+# RewriteRule ^(.*)$ $1 [R=200,L]
+
 #################################################################################################
 # START PROCESSWIRE HTACCESS DIRECTIVES
 # @version 3.0
@@ -56,7 +72,7 @@ Options -Indexes
 Options -MultiViews
 
 # Do follow symbolic links
-Options +FollowSymLinks
+# Options +FollowSymLinks
 # Options +SymLinksifOwnerMatch
 
 # Character encoding: Serve text/html or text/plain as UTF-8
@@ -100,6 +116,8 @@ ErrorDocument 404 /index.php
 
   # Optionally (O) prevent mime-based attacks via content sniffing (IE+Chrome)
   # Header set X-Content-Type-Options "nosniff" 
+
+
 </IfModule>
 
 
