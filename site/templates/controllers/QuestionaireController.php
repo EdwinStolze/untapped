@@ -34,6 +34,8 @@ class QuestionaireController extends \Wireframe\Controller {
                 'icon' => $question->driver->icon_name,
                 'icon_title' => $question->driver->title,
                 'question'   => $question->question,
+                'category_id' => $question->categories->id,
+                'category_title' => $question->categories->title,
                 'explanation' => $question->explanation,
                 'scoringOptions' => $scoringOptions,
                 'userScore' => 0
