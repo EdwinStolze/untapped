@@ -1,17 +1,24 @@
-<?php namespace Wireframe\Controller;
-  
+<?php
 
-class DriversController extends \Wireframe\Controller {
-  
-    public function render() {
-        echo $this->wire('modules')->get('WireframeAPI')->init()->sendHeaders()->render();
-        $this->view->setLayout(null)->halt();
+namespace Wireframe\Controller;
+
+
+class DriversController extends \Wireframe\Controller
+{
+
+    public function render()
+    {
+        // $this->renderJSON(); // Temp 
+
+        // echo $this->wire('modules')->get('WireframeAPI')->init()->sendHeaders()->render();
+        // $this->view->setLayout(null)->halt();
     }
 
-    private function createDriverArray($driver) {
-        
+    private function createDriverArray($driver)
+    {
+
         $quotes = [];
-        foreach($driver->quotes as $quote) {
+        foreach ($driver->quotes as $quote) {
             array_push($quotes, array(
                 'quote' => $quote->quote,
                 'author' => $quote->author
@@ -28,24 +35,54 @@ class DriversController extends \Wireframe\Controller {
         );
     }
 
-    public function renderJSON(): ?string {
-        $drivers_groups = array();
-        foreach($this->pages->find("template=driver_group, sort=sort") as $driver_group) {
-            foreach($driver_group->children() as $driver) {
-
-                if ( ! isset( $drivers_groups[$driver->driver_type->name] ) ) {
-                    $drivers_groups[$driver->driver_type->name]  = [];
-                }
-
-                if ( ! isset( $drivers_groups[$driver->driver_type->name][$driver_group->name] ) ) {
-                    $drivers_groups[$driver->driver_type->name][$driver_group->name] = [];
-                }
-
-                $group = $drivers_groups[$driver->driver_type->name][$driver_group->name];
-                array_push($drivers_groups[$driver->driver_type->name][$driver_group->name], $this->createDriverArray($driver));
-            }
+    public function &getItemFromArray($key, $value, &$array)
+    {
+        foreach ($array as &$item) {
+            if ($item[$key] == $value) return $item;
         }
-        return json_encode($drivers_groups, true);
+        return FALSE;
+    }
+
+    public function renderJSON(): ?string
+    {
+        $driverslist = array(
+            "version" => 1,
+            "types" => []
+        );
+
+        foreach ($this->pages->find("template=driver, sort=sort") as $driver) {
+
+            // Create drivers group for driver_type
+            if (!$this->getItemFromArray('id', $driver->driver_type->id, $driverslist['types'])) {
+
+                $driver_groups = [];
+                foreach ($this->pages->find("template=driver_group") as $driver_group) {
+                    array_push($driver_groups, array(
+                        "id" => $driver_group->id,
+                        "name" => $driver_group->name,
+                        "drivers" => []
+                    ));
+                }
+
+                // Create drive_type
+                array_push(
+                    $driverslist['types'],
+                    array(
+                        "id" => $driver->driver_type->id,
+                        "name" => $driver->driver_type->name,
+                        "groups" => $driver_groups
+                    )
+                );
+                
+            }
+
+            // Add driver to the appropriate driver group
+            $type   = &$this->getItemFromArray('id', $driver->driver_type->id, $driverslist['types']);
+            $group  = &$this->getItemFromArray('id', $driver->parent->id, $type ['groups']);
+            $group['drivers'][] = $this->createDriverArray($driver);
+
+        }
+        return json_encode($driverslist, true);
     }
 
 }
