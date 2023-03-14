@@ -113,11 +113,11 @@ class BackendController extends \Wireframe\Controller {
             $average = $cat['scoreSum'] / $cat['amount'];
             $roundedAverage = (int)round($average, 0, PHP_ROUND_HALF_DOWN);
             $cat['scoreAverage'] = $roundedAverage;
-            // $roundedAverage = $roundedAverage ? $roundedAverage : 1; // LET OP 0 wordt 1 maar we moeten een foutmelding geven.
-            // if ($this->pages->get($cat['id'])->scoring->count) {
-            //     $explanation = $this->pages->get($cat['id'])->scoring->get('score_value='.$roundedAverage)->score_description;
-            //     $cat['explanation'] = $explanation;
-            // }
+            $roundedAverage = $roundedAverage ? $roundedAverage : 1; // LET OP 0 wordt 1 maar we moeten een foutmelding geven.
+            if ($this->pages->get($cat['id'])->scoring->count) {
+                $explanation = $this->pages->get($cat['id'])->scoring->get('score_value='.$roundedAverage)->score_description;
+                $cat['explanation'] = $explanation;
+            }
         }
 
         return $resultsArray;
