@@ -2,11 +2,18 @@
 
 namespace Wireframe\Controller;
 
+use ProcessWire\ProcessWire;
 
 class ChapterController extends \Wireframe\Controller
 {
+    protected $controllerArray = [];
 
-    public function defineArray($page) 
+    public function init() 
+    {
+        $this->controllerArray = $this->defineArray($this->page);
+    }
+
+    public static function defineArray($page) 
     {
         return array(
             'id'            => $page->id,
@@ -20,14 +27,26 @@ class ChapterController extends \Wireframe\Controller
 
     public function render()
     {
-        // var_dump($this->defineArray());
         $this->view->setLayout('json');
-        $this->view->json = json_encode($this->defineArray($this->page), true);
+        $this->view->json = json_encode($this->controllerArray, true);
     }
 
     public function renderJSON(): string
     {   
-        return json_encode($this->defineArray($this->page), true);
+        return json_encode($this->controllerArray, true);
     }
+
+    public static function getChapter($page) 
+    {
+        return ChapterController::defineArray($page);
+    }
+
+    public static function getControllerArray($page) 
+    {
+        $controller = new ChapterController($page);
+        $controller->init();
+        return $controller->controllerArray;
+    }
+
 
 }

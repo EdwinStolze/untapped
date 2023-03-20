@@ -3,9 +3,8 @@
 namespace Wireframe\Controller;
 
 
-class DriversController extends \Wireframe\Controller
-{
-
+class DriverClusterCategoryController extends \Wireframe\Controller
+{   
     private $controllerArray = [];
 
     public function init() 
@@ -16,20 +15,18 @@ class DriversController extends \Wireframe\Controller
     
     public static function defineArray($page) {
         return array(
-            'id'                => $page->id,
-            'parent'            => $page->parent->id,
-            'title'             => $page->title,
-            'template'          => $page->template->name,
-            'name'              => $page->name,
+            'id'                => $page->driver_category->id,
+            'title'             => $page->driver_category->title,
+            'template'          => $page->driver_category->template->name,
+            'name'              => $page->driver_category->name,
             'drivers'           => [],
         );
     }
 
     private function setDrivers() 
     {
-        foreach($this->pages->find('template=driver, sort=sort') as $driverPage) 
-        {
-            $this->controllerArray['drivers'][] = DriverController::getControllerArray(($driverPage));
+        foreach($this->page->children('template=driver') as $driverPage) {
+            $this->controllerArray['drivers'][] = DriverController::getControllerArray($driverPage);
         }
     }
 
@@ -46,7 +43,7 @@ class DriversController extends \Wireframe\Controller
 
     public static function getControllerArray($page) 
     {
-        $controller = new DriversController($page);
+        $controller = new DriverClusterCategoryController($page);
         $controller->init();
         return $controller->controllerArray;
     }

@@ -34,8 +34,8 @@ class QuestionaireController extends \Wireframe\Controller {
                 'icon' => $question->driver->icon_name,
                 'icon_title' => $question->driver->title,
                 'question'   => $question->question,
-                'category_id' => $question->categories->id,
-                'category_title' => $question->categories->title,
+                'result_id' => $question->results->id,
+                'result_title' => $question->results->title,
                 'explanation' => $question->explanation,
                 'scoringOptions' => $scoringOptions,
                 'userScore' => 0
@@ -57,11 +57,11 @@ class QuestionaireController extends \Wireframe\Controller {
         }
 
 
-        $categories = [];
-        foreach($this->page->find("template=category") as $category) {
+        $results = [];
+        foreach($this->page->find("template=result") as $result) {
 
             $catScoringOptions = [];
-            foreach($category->scoring as $score) {
+            foreach($result->scoring as $score) {
                 array_push($catScoringOptions, array(
                     'score_value' => $score->score_value,
                     'score_label' => $score->score_label,
@@ -69,10 +69,10 @@ class QuestionaireController extends \Wireframe\Controller {
                 ));
             }
 
-            array_push($categories, array(
-                'id' => $category->id,
-                'title' => $category->title,
-                'explanation' => $category->explanation,
+            array_push($results, array(
+                'id' => $result->id,
+                'title' => $result->title,
+                'explanation' => $result->explanation,
                 'scoringOptions' => $catScoringOptions,
             ));
         }
@@ -87,7 +87,7 @@ class QuestionaireController extends \Wireframe\Controller {
             'questions' => $questions,
             'sortablesText' => $this->page->sortablestext,
             'sortables' => $sortables,
-            'categories' => $categories
+            'results' => $results
         );
 
         return json_encode($data, true);
