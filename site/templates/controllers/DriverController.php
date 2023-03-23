@@ -21,8 +21,6 @@ class DriverController extends \Wireframe\Controller
             'parent'            => $page->parent->id,
             'template'          => $page->template->name,
             'title'             => $page->title,
-            // 'driver_group'      => $page->parent->name,
-            // 'driver_type'       => $page->driver_type->name,
             'long_title'        => $page->title_long,
             'icon_name'         => $page->icon_name,
             'explanation'       => $page->explanation,

@@ -3,7 +3,7 @@
 namespace Wireframe\Controller;
 
 
-class DriversClustersController extends \Wireframe\Controller
+class DriverClustersController extends \Wireframe\Controller
 {   
     private $controllerArray = [];
 
@@ -22,7 +22,7 @@ class DriversClustersController extends \Wireframe\Controller
             'title'                 => $page->title,
             'template'              => $page->template->name,
             'name'                  => $page->name,
-            'drivers_clusters'      => [],
+            'driver_clusters'      => [],
             'driver_categories'     => [],
         );
     }
@@ -31,7 +31,7 @@ class DriversClustersController extends \Wireframe\Controller
     {
         foreach($this->page->children('template=driver_cluster') as $driverClusterPage) 
         {
-            $this->controllerArray['drivers_clusters'][] = DriverClusterController::getControllerArray($driverClusterPage);
+            $this->controllerArray['driver_clusters'][] = DriverClusterController::getControllerArray($driverClusterPage);
         }
     }
 
