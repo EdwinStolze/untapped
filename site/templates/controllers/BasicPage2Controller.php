@@ -24,6 +24,7 @@ class BasicPage2Controller extends \Wireframe\Controller
             'body'              => $page->body,
             'next_page'         => $page->next_page->id,
             'button_name'       => $page->button_name,
+            'button_type'       => $page->button->id,
             'composer'          => []
         );
     }
@@ -38,13 +39,15 @@ class BasicPage2Controller extends \Wireframe\Controller
             if ($item->type == 'rm_body') $this->controllerArray['composer'][]      = $this->build_rm_body($item);
             if ($item->type == 'rm_steps') $this->controllerArray['composer'][]     = $this->build_rm_steps($item);
             if ($item->type == 'rm_buttons') $this->controllerArray['composer'][]   = $this->build_rm_buttons($item);
-            if ($item->type == 'rm_accordion') $this->controllerArray['composer'][]   = $this->build_rm_accordion($item);
+            if ($item->type == 'rm_accordion') $this->controllerArray['composer'][] = $this->build_rm_accordion($item);
+            if ($item->type == 'rm_comments') $this->controllerArray['composer'][]  = $this->build_rm_comments($item);
         }
     }
 
     private function build_rm_body($item)
     {
         return (object) array(
+            'id'                => $item->id,
             'item_type'         => $item->type,
             'body'              => $item->body,
         );
@@ -61,6 +64,7 @@ class BasicPage2Controller extends \Wireframe\Controller
         }
 
         return (object) array(
+            'id'                => $item->id,
             'item_type'         => $item->type,
             'steps'             => $steps,
         );
@@ -77,6 +81,7 @@ class BasicPage2Controller extends \Wireframe\Controller
         }
 
         return (object) array(
+            'id'                => $item->id,
             'item_type'         => $item->type,
             'buttons'           => $buttons,
         );
@@ -87,14 +92,23 @@ class BasicPage2Controller extends \Wireframe\Controller
         foreach ($item->accordion as $acc_item) 
         {
             $accordion[] = array(
-                'title'       => $acc_item->title,
-                'next_page'   => $acc_item->body,
+                'title'  => $acc_item->title,
+                'body'   => $acc_item->body,
             );
         }
 
         return (object) array(
+            'id'                => $item->id,
             'item_type'         => $item->type,
-            'accordion_item'    => $accordion,
+            'accordion_items'   => $accordion,
+        );
+    }
+
+    private function build_rm_comments($item)
+    {
+        return (object) array(
+            'id'                => $item->id,
+            'item_type'         => $item->type,
         );
     }
 
