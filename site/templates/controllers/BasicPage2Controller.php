@@ -11,7 +11,7 @@ class BasicPage2Controller extends \Wireframe\Controller
     public function init()
     {
         $this->controllerArray = $this->defineArray($this->page);
-        $this->build();
+        // $this->build($this->page);
     }
     
     public static function defineArray($page)
@@ -25,7 +25,7 @@ class BasicPage2Controller extends \Wireframe\Controller
             'next_page'         => $page->next_page->id,
             'button_name'       => $page->button_name,
             'button_type'       => $page->button->id,
-            'composer'          => []
+            'composer'          => BasicPage2Controller::get_content_composer($page)
         );
     }
 
@@ -33,18 +33,20 @@ class BasicPage2Controller extends \Wireframe\Controller
     /**
      * Build an array of all the content_composer items.
      */
-    private function build()
-    {
-        foreach ($this->page->content_composer as $item) {
-            if ($item->type == 'rm_body') $this->controllerArray['composer'][]      = $this->build_rm_body($item);
-            if ($item->type == 'rm_steps') $this->controllerArray['composer'][]     = $this->build_rm_steps($item);
-            if ($item->type == 'rm_buttons') $this->controllerArray['composer'][]   = $this->build_rm_buttons($item);
-            if ($item->type == 'rm_accordion') $this->controllerArray['composer'][] = $this->build_rm_accordion($item);
-            if ($item->type == 'rm_comments') $this->controllerArray['composer'][]  = $this->build_rm_comments($item);
+    public static function get_content_composer($page)
+    {   
+        $controllerArray = [];
+        foreach ($page->content_composer as $item) {
+            if ($item->type == 'rm_body') $controllerArray[]      = BasicPage2Controller::build_rm_body($item);
+            if ($item->type == 'rm_steps') $controllerArray[]     = BasicPage2Controller::build_rm_steps($item);
+            if ($item->type == 'rm_buttons') $controllerArray[]   = BasicPage2Controller::build_rm_buttons($item);
+            if ($item->type == 'rm_accordion') $controllerArray[] = BasicPage2Controller::build_rm_accordion($item);
+            if ($item->type == 'rm_comments') $controllerArray[]  = BasicPage2Controller::build_rm_comments($item);
         }
+        return $controllerArray;
     }
 
-    private function build_rm_body($item)
+    private static function build_rm_body($item)
     {
         return (object) array(
             'id'                => $item->id,
@@ -53,7 +55,7 @@ class BasicPage2Controller extends \Wireframe\Controller
         );
     }
 
-    private function build_rm_steps($item)
+    private static function build_rm_steps($item)
     {
         foreach ($item->steps as $step) 
         {
@@ -70,7 +72,7 @@ class BasicPage2Controller extends \Wireframe\Controller
         );
     }
 
-    private function build_rm_buttons($item)
+    private static function build_rm_buttons($item)
     {
         foreach ($item->page_buttons as $button) 
         {
@@ -87,7 +89,7 @@ class BasicPage2Controller extends \Wireframe\Controller
         );
     }
 
-    private function build_rm_accordion($item)
+    private static function build_rm_accordion($item)
     {
         foreach ($item->accordion as $acc_item) 
         {
@@ -104,7 +106,7 @@ class BasicPage2Controller extends \Wireframe\Controller
         );
     }
 
-    private function build_rm_comments($item)
+    private static function build_rm_comments($item)
     {
         return (object) array(
             'id'                => $item->id,
