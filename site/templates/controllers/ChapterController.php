@@ -2,7 +2,7 @@
 
 namespace Wireframe\Controller;
 
-use ProcessWire\ProcessWire;
+use ProcessWire\Wireframe;
 
 class ChapterController extends \Wireframe\Controller
 {
@@ -21,7 +21,7 @@ class ChapterController extends \Wireframe\Controller
             'template'      => $page->template->name,
             'title'         => $page->title,
             'body'          => $page->body,
-            'children'      => []
+            'composer'      => Wireframe::component('ContentComposer')->create($page)
         );
     }
 

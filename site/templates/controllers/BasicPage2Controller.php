@@ -12,7 +12,6 @@ class BasicPage2Controller extends \Wireframe\Controller
     public function init()
     {
         $this->controllerArray = $this->defineArray($this->page);
-        // $this->build($this->page);
     }
     
     public static function defineArray($page)
@@ -26,7 +25,7 @@ class BasicPage2Controller extends \Wireframe\Controller
             'next_page'         => $page->next_page->id,
             'button_name'       => $page->button_name,
             'button_type'       => $page->button->id,
-            'composer'          => Wireframe::component('ContentComposer', [$page])->create($page)
+            'composer'          => Wireframe::component('ContentComposer')->create($page)
         );
     }
 

@@ -12,7 +12,7 @@ class ContentComposer extends \Wireframe\Component {
      *
      * @param \ProcessWire\Page $item Page related to current Card.
      */
-    public function __construct(\ProcessWire\Page $item) {
+    public function __construct(\ProcessWire\Page $item=null) {
 
     }
 
@@ -63,8 +63,10 @@ class ContentComposer extends \Wireframe\Component {
         foreach ($item->page_buttons as $button) 
         {
             $buttons[] = array(
+                'id'          => $button->id,
                 'title'       => $button->title,
                 'next_page'   => $button->next_page->id,
+                'router_name' => $button->vue_router_name  
             );
         }
 
