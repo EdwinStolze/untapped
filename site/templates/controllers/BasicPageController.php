@@ -13,6 +13,18 @@ class BasicPageController extends \Wireframe\Controller
     {
         $this->controllerArray = $this->defineArray($this->page);
     }
+
+
+    //TODO : duplication
+    public static function getRouterName($next_page)
+    {
+        // var_dump($next_page->template->name);
+        if ($next_page->template->name == 'basic-page') return 'textpage';
+        if ($next_page->template->name == 'driver_clusters') return 'drivers';
+        throw new \Exception('No router name found with this template.');
+    }
+
+
     
     public static function defineArray($page)
     {
@@ -26,7 +38,8 @@ class BasicPageController extends \Wireframe\Controller
             'button_name'       => $page->button_name,
             'button_type'       => $page->button->id,
             'router_name'       => $page->vue_router_name,
-            'composer'          => Wireframe::component('ContentComposer')->create($page)
+            'composer'          => Wireframe::component('ContentComposer')->create($page),
+            'footer_buttons'    => Wireframe::component('FooterButtons')->create($page),
         );
     }
 

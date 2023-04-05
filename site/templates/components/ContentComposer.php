@@ -2,6 +2,8 @@
 
 namespace Wireframe\Component;
 
+use Wireframe\Controller\BasicPageController;
+
 /**
  * Card component
  */
@@ -64,9 +66,10 @@ class ContentComposer extends \Wireframe\Component {
         {
             $buttons[] = array(
                 'id'          => $button->id,
-                'title'       => $button->title,
+                // 'title'       => $button->title,
+                'title'       => $button->button_name,
                 'next_page'   => $button->next_page->id,
-                'router_name' => $button->vue_router_name  
+                'router_name' => BasicPageController::getRouterName($button->next_page),
             );
         }
 
