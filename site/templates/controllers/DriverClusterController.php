@@ -11,7 +11,6 @@ class DriverClusterController extends \Wireframe\Controller
     {
         $this->controllerArray = $this->defineArray($this->page);
         $this->setDrivers();
-        //$this->setCategory();
     }
     
     public static function defineArray($page) {
@@ -22,23 +21,14 @@ class DriverClusterController extends \Wireframe\Controller
             'template'              => $page->template->name,
             'name'                  => $page->name,
             'drivers'               => [],
-            'drivers_categories'    => [],
         );
     }
 
     private function setDrivers() 
     {
-        foreach($this->page->find('template=driver') as $driverPage) 
+        foreach($this->page->find('template=driver, sort=sort') as $driverPage) 
         {
             $this->controllerArray['drivers'][] = DriverController::getControllerArray($driverPage);
-        }
-    }
-
-    private function setCategory() 
-    {
-        foreach($this->page->children('template=driver_cluster_category') as $driver_category)
-        {
-            $this->controllerArray['drivers_categories'][] = DriverClusterCategoryController::getControllerArray($driver_category) ;
         }
     }
 

@@ -23,7 +23,7 @@ class DriverClustersController extends \Wireframe\Controller
             'template'              => $page->template->name,
             'name'                  => $page->name,
             'body'                  => $page->body,
-            'driver_clusters'      => [],
+            'driver_clusters'       => [],
             'driver_categories'     => [],
         );
     }
