@@ -45,10 +45,10 @@ class ContentComposer extends \Wireframe\Component {
 
     private static function build_rm_steps($item)
     {
-        foreach ($item->steps as $step) 
+        foreach ($item->steps as $key => $step) 
         {
             $steps[] = array(
-                'number'    => 1,
+                'index'     => $key + 1,
                 'summary'   => $step->summary
             );
         }
