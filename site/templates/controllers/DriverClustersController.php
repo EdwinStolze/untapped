@@ -2,7 +2,7 @@
 
 namespace Wireframe\Controller;
 
-
+use ProcessWire\Wireframe;
 class DriverClustersController extends \Wireframe\Controller
 {   
     private $controllerArray = [];
@@ -23,6 +23,7 @@ class DriverClustersController extends \Wireframe\Controller
             'template'              => $page->template->name,
             'name'                  => $page->name,
             'body'                  => $page->body,
+            'footer_buttons'        => Wireframe::component('FooterButtons')->create($page),
             'driver_clusters'       => [],
             'driver_categories'     => [],
         );
