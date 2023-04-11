@@ -7,6 +7,13 @@ namespace Wireframe\Controller;
  */
 class APIController extends \Wireframe\Controller {
 
+    public function init()
+    {
+        header('Access-Control-Allow-Origin: *');
+        header('Access-Control-Allow-Methods: GET,POST, HEAD');
+        header('Access-Control-Allow-Headers: X-Requested-With, Content-Type');
+    }
+
     /**
      * Render method
      */

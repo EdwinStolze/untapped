@@ -4,17 +4,21 @@ namespace Wireframe\Controller;
   
 class BackendController extends \Wireframe\Controller {
   
-    /**
-     * Render method gets executed automatically when page is rendered.
-     */
+    public function init()
+    {
+        header('Access-Control-Allow-Origin: *');
+        header('Access-Control-Allow-Methods: GET,POST, HEAD');
+        header('Access-Control-Allow-Headers: X-Requested-With, Content-Type');
+    }
+    
+    
     public function render() {
-
-        $this->view->setLayout('json');
+        
+        $this->view->setLayout('json'); 
         $results = json_decode(file_get_contents('php://input'), false); //true naar // als object
         
         // Process comments
         if (isset($results->comment)) {
-            // $this->processComments($results);
             $processComments = $this->processComments($results);
             $processComments = json_encode($processComments, true);
             $this->view->json = $processComments;
@@ -23,6 +27,7 @@ class BackendController extends \Wireframe\Controller {
 
         // Process questionaire results
         if (isset($results->questionaireID)) {
+            $this->log->error('init processing'); 
             $processedResults = $this->processResults($results);
             $processedResults = json_encode($processedResults, true);
             $this->view->json = $processedResults;
@@ -68,6 +73,9 @@ class BackendController extends \Wireframe\Controller {
         // Create categories array
         $resultArray = [];
         foreach($results as $result) {
+
+
+
             $scoringOptions = [];
             foreach($result->scoring as $score) {
                 array_push($scoringOptions, array(
@@ -82,16 +90,18 @@ class BackendController extends \Wireframe\Controller {
                 'explanation' => '',
                 'amount' => 0,
                 'scoreSum' => 0,
+                'show' => true,
                 'scoreAverage' => 1,
                 'scoringOptions' => $scoringOptions,
                 'strapLine' => $result->strapline
             );
             array_push($resultsArray['results'], $res);
         }
+
         
         // Collect data
-        foreach($resultObject->results as $result) {
-
+        foreach($resultObject->results as $result) 
+        {
             $questionPage = $this->pages->get($result->id);
             if (!$questionairePage) continue;
             $res = $questionPage->results;
@@ -99,7 +109,7 @@ class BackendController extends \Wireframe\Controller {
             $key = array_search($res->id, array_map(function($v){return $v['id'];},$resultsArray['results']));
             $resultsArray['results'][$key]['amount']++;
             $resultsArray['results'][$key]['scoreSum'] = $resultsArray['results'][$key]['scoreSum'] + $result->userScore ;
-
+            
             // Indien resultaten ook in een andere result verwerkt moeten worden.
             if ($res->add_results_to) {
                 $key = array_search($res->add_results_to->id, array_map(function($v){return $v['id'];},$resultsArray['results']));
@@ -107,10 +117,15 @@ class BackendController extends \Wireframe\Controller {
                 $resultsArray['results'][$key]['scoreSum'] = $resultsArray['results'][$key]['scoreSum'] + $result->userScore ; 
             }
         }   
-
+        
         // Process averages
-        foreach($resultsArray['results'] as &$res) {
-            $average = $res['scoreSum'] / $res['amount'];
+        foreach($resultsArray['results'] as &$res) 
+        {
+            $average = 0;
+            if ( $res['amount'] ) 
+            {
+                $average = $res['scoreSum'] / $res['amount'];
+            } 
             $roundedAverage = (int)round($average, 0, PHP_ROUND_HALF_DOWN);
             $res['scoreAverage'] = $roundedAverage;
             $roundedAverage = $roundedAverage ? $roundedAverage : 1; // LET OP 0 wordt 1 maar we moeten een foutmelding geven.
