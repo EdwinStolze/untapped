@@ -87,7 +87,8 @@ class QuestionaireController extends \Wireframe\Controller {
             'questions' => $questions,
             'sortablesText' => $this->page->sortablestext,
             'sortables' => $sortables,
-            'results' => $results
+            'results' => $results,
+            'resultsText' => $this->page->result_text,
         );
 
         return json_encode($data, true);
