@@ -39,6 +39,8 @@ class FooterButtons extends \Wireframe\Component {
                 'title'       => $fb->button_name,
                 'type'        => $fb->button->id,
                 'next_page'   => $fb->next_page->id,
+                'pulse'       => $fb->pulse,
+                'reversed'       => $fb->reversed,
                 'router_name' => FooterButtons::getRouterName($fb->next_page),
             );
         }
