@@ -8,8 +8,11 @@ namespace Wireframe\Controller;
 class QuestionaireController extends \Wireframe\Controller {
   
     public function render() {
-        echo $this->wire('modules')->get('WireframeAPI')->init()->sendHeaders()->render();
-        $this->view->setLayout(null)->halt();
+        // echo $this->wire('modules')->get('WireframeAPI')->init()->sendHeaders()->render();
+        // $this->view->setLayout(null)->halt();
+
+        $this->view->setLayout('json');
+        $this->view->json = $this->renderJSON();
     }
 
     public function renderJSON(): ?string {
@@ -88,7 +91,8 @@ class QuestionaireController extends \Wireframe\Controller {
             'sortablesText' => $this->page->sortablestext,
             'sortables' => $sortables,
             'results' => $results,
-            'resultsText' => $this->page->result_text,
+            'resultsText' => $this->page->get('template=results')->body,
+            'next_page' => $this->page->next_page->id
         );
 
         return json_encode($data, true);
