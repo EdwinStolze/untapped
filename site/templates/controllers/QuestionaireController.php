@@ -32,16 +32,17 @@ class QuestionaireController extends \Wireframe\Controller {
             }
 
             array_push($questions, array(
-                'id' => $question->id,
-                'title' => $question->title,
-                'icon' => $question->driver->icon_name,
-                'icon_title' => $question->driver->title,
-                'question'   => $question->question,
-                'result_id' => $question->results->id,
-                'result_title' => $question->results->title,
-                'explanation' => $question->explanation,
-                'scoringOptions' => $scoringOptions,
-                'userScore' => 0
+                'id'                    => $question->id,
+                'title'                 => $question->title,
+                'icon'                  => $question->driver->driver_icon->icon_name,
+                'icon_title'            => $question->driver->title,
+                'icon_scale_factor'     => $question->driver->driver_icon->scale_factor,
+                'question'              => $question->question,
+                'result_id'             => $question->results->id,
+                'result_title'          => $question->results->title,
+                'explanation'           => $question->explanation,
+                'scoringOptions'        => $scoringOptions,
+                'userScore'             => 0
             ));
         }
 
@@ -53,8 +54,8 @@ class QuestionaireController extends \Wireframe\Controller {
         $defaultScoringOptions = [];
         foreach($this->page->scoring as $score) {
             array_push($defaultScoringOptions, array(
-                'score_value' => $score->score_value,
-                'score_label' => $score->score_label,
+                'score_value'       => $score->score_value,
+                'score_label'       => $score->score_label,
                 'score_description' => $score->score_description
             ));
         }
@@ -66,33 +67,33 @@ class QuestionaireController extends \Wireframe\Controller {
             $catScoringOptions = [];
             foreach($result->scoring as $score) {
                 array_push($catScoringOptions, array(
-                    'score_value' => $score->score_value,
-                    'score_label' => $score->score_label,
+                    'score_value'       => $score->score_value,
+                    'score_label'       => $score->score_label,
                     'score_description' => $score->score_description
                 ));
             }
 
             array_push($results, array(
-                'id' => $result->id,
-                'title' => $result->title,
-                'explanation' => $result->explanation,
-                'scoringOptions' => $catScoringOptions,
+                'id'                => $result->id,
+                'title'             => $result->title,
+                'explanation'       => $result->explanation,
+                'scoringOptions'    => $catScoringOptions,
             ));
         }
 
         $data = array(
-            'companyName' => '',
-            'questionaireID' => $this->page->id,
-            'version' => $this->page->version,
-            'hash' => $this->page->hash,
-            'strapline' => $this->page->strapline,
+            'companyName'           => '',
+            'questionaireID'        => $this->page->id,
+            'version'               => $this->page->version,
+            'hash'                  => $this->page->hash,
+            'strapline'             => $this->page->strapline,
             'defaultScoringOptions' => $defaultScoringOptions,
-            'questions' => $questions,
-            'sortablesText' => $this->page->sortablestext,
-            'sortables' => $sortables,
-            'results' => $results,
-            'resultsText' => $this->page->get('template=results')->body,
-            'next_page' => $this->page->next_page->id
+            'questions'             => $questions,
+            'sortablesText'         => $this->page->sortablestext,
+            'sortables'             => $sortables,
+            'results'               => $results,
+            'resultsText'           => $this->page->get('template=results')->body,
+            'next_page'             => $this->page->next_page->id
         );
 
         return json_encode($data, true);

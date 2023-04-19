@@ -22,8 +22,10 @@ class DriverController extends \Wireframe\Controller
             'template'          => $page->template->name,
             'title'             => $page->title,
             'long_title'        => $page->title_long,
-            'icon_name'         => $page->icon_name,
+            // 'icon_name'         => $page->icon_name,
+            'icon_name'         => $page->driver_icon->icon_name,
             'explanation'       => $page->explanation,
+            'scale_factor'      => $page->scale_factor,
             'chapters'          => [],
             'driver_cluster'    => 'bar',
             'driver_category'   => 'foo',
@@ -32,7 +34,7 @@ class DriverController extends \Wireframe\Controller
     
     public function setChapters() 
     {
-        foreach($this->page->find('template=chapter') as $chapterPage) 
+        foreach($this->page->find('template=chapter, sort=sort') as $chapterPage) 
         {
             array_push(
                 $this->controllerArray['chapters'],
@@ -56,6 +58,7 @@ class DriverController extends \Wireframe\Controller
     {
         $this->view->setLayout('json');
         $this->view->json = json_encode($this->controllerArray, true);
+        
     }
 
     public function renderJSON(): string
