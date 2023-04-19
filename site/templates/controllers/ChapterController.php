@@ -22,6 +22,7 @@ class ChapterController extends \Wireframe\Controller
             'title'         => $page->title,
             'body'          => $page->body,
             'top_divider'   => $page->show_top_divider === "" ? true : $page->show_top_divider,
+            'show_title'    => $page->show_title === "" ? true : $page->show_title,
             'composer'      => Wireframe::component('ContentComposer')->create($page)
         );
     }

@@ -59,8 +59,6 @@ a {
 }
 
 .main {
-    // background-color: gray;
-
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: auto 1fr auto;
@@ -68,7 +66,6 @@ a {
 
     }
     .footer {
-        // background-color:  yellowgreen;
         display: flex;
         justify-content: center;
     }
@@ -76,7 +73,6 @@ a {
 
 .footer {
     margin-top: auto;
-    // background-color:  $primary-color;
     padding: 1rem ;
 }
 
